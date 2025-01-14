@@ -1,0 +1,14 @@
+services:
+  postgres:
+    container_name: BookSwapContainer
+    image: postgres:14-alpine
+    env_file:
+      - env/test.env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
