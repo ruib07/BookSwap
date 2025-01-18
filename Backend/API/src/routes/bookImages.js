@@ -4,7 +4,7 @@ module.exports = (app) => {
   const router = express.Router();
 
   router.get('/:book_id', (req, res, next) => {
-    app.services.bookImage.findAll({ book_id: req.params.book_id })
+    app.services.bookImage.find({ book_id: req.params.book_id })
       .then((result) => res.status(200).json(result))
       .catch((error) => next(error));
   });

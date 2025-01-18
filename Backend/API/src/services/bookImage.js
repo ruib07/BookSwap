@@ -1,7 +1,7 @@
 const ValidationError = require('../errors/validationError');
 
 module.exports = (app) => {
-  const findAll = (filter = {}) => app.db('book_images').where(filter);
+  const find = (filter = {}) => app.db('book_images').where(filter).first();
 
   const save = (registerBookImage) => {
     if (!registerBookImage.image_url) throw new ValidationError('Image URL is required!');
@@ -14,7 +14,7 @@ module.exports = (app) => {
     .del();
 
   return {
-    findAll,
+    find,
     save,
     remove,
   };
