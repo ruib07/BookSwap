@@ -50,6 +50,21 @@ export const AddBook = async (newBook: INewBook) => {
   }
 };
 
+export const DeleteBook = async (bookId: string) => {
+  try {
+    const response = await axios.delete(
+      `${API_BASE_URL}/${API_VERSION}/books/${bookId}`,
+      {
+        headers: token,
+      }
+    );
+
+    return response;
+  } catch (error) {
+    throw new Error("Failed to delete book!");
+  }
+};
+
 //Book Images
 export const GetBookImageByBook = async (bookId: string) => {
   try {
@@ -79,5 +94,20 @@ export const AddBookImage = async (newBookImage: IBookImage) => {
     return response;
   } catch (error) {
     throw new Error("Failed to add book image!");
+  }
+};
+
+export const DeleteBookImage = async (bookImageId: string) => {
+  try {
+    const response = await axios.delete(
+      `${API_BASE_URL}/${API_VERSION}/bookImages/${bookImageId}`,
+      {
+        headers: token,
+      }
+    );
+
+    return response;
+  } catch (error) {
+    throw new Error("Failed to delete book image!");
   }
 };

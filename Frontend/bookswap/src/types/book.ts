@@ -5,6 +5,7 @@ export interface IBook {
   description: string;
   genre: string;
   status: string;
+  owner_id: string;
 }
 
 export interface INewBook {
