@@ -4,12 +4,15 @@ import { GetBookById, GetBookImageByBook } from "../../services/booksService";
 import { IBook } from "../../types/book";
 import Header from "../../layouts/Header";
 import NotFound from "../../components/404";
+import DeleteBookModal from "./DeleteBookModal";
 
 export default function BookDetails() {
   const { bookId } = useParams<{ bookId: string }>();
   const [book, setBook] = useState<IBook | null>(null);
   const [bookImage, setBookImage] = useState<string | null>(null);
+  const [bookImageId, setBookImageId] = useState<string | null>(null);
   const [, setError] = useState<string | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate();
 
   const currentUserId = localStorage.getItem("id");
@@ -24,6 +27,7 @@ export default function BookDetails() {
         try {
           const imageResponse = await GetBookImageByBook(bookId!);
           setBookImage(imageResponse.data.image_url);
+          setBookImageId(imageResponse.data.id);
         } catch (imageError) {
           console.error(`Error fetching image for book ${bookId}:`, imageError);
           setBookImage(
@@ -37,6 +41,10 @@ export default function BookDetails() {
 
     fetchBookAndImage();
   }, [bookId]);
+
+  const handleDeleteConfirm = () => {
+    navigate("/Books");
+  };
 
   if (!book) {
     return <NotFound />;
@@ -79,16 +87,33 @@ export default function BookDetails() {
                 Trade Book
               </button>
               {book.owner_id === currentUserId && (
-                <button
-                  className="ms-3 bg-orange-900 text-white py-2 px-4 rounded-md hover:bg-orange-800 transition duration-200"
-                  onClick={() => navigate(`/AddBookImage?bookId=${book.id}`)}
-                >
-                  Add Book Image
-                </button>
+                <>
+                  <button
+                    className="ms-3 bg-orange-900 text-white py-2 px-4 rounded-md hover:bg-orange-800 transition duration-200"
+                    onClick={() => navigate(`/AddBookImage?bookId=${book.id}`)}
+                  >
+                    Add Book Image
+                  </button>
+                  <button
+                    className="ms-3 bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-500 transition duration-200"
+                    onClick={() => setShowDeleteModal(true)}
+                  >
+                    Delete Book
+                  </button>
+                </>
               )}
             </div>
           </div>
         </div>
+
+        {showDeleteModal && (
+          <DeleteBookModal
+            bookImageId={bookImageId || ""}
+            bookId={book.id}
+            onClose={() => setShowDeleteModal(false)}
+            onConfirm={handleDeleteConfirm}
+          />
+        )}
       </div>
     </div>
   );
