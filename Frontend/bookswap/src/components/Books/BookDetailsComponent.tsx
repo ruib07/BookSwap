@@ -5,6 +5,7 @@ import { IBook } from "../../types/book";
 import Header from "../../layouts/Header";
 import NotFound from "../../components/404";
 import DeleteBookModal from "./DeleteBookModal";
+import TradeBookModal from "../Transactions/BookTransactionModal";
 
 export default function BookDetails() {
   const { bookId } = useParams<{ bookId: string }>();
@@ -12,6 +13,7 @@ export default function BookDetails() {
   const [bookImage, setBookImage] = useState<string | null>(null);
   const [bookImageId, setBookImageId] = useState<string | null>(null);
   const [, setError] = useState<string | null>(null);
+  const [showTradeModal, setShowTradeModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate();
 
@@ -69,7 +71,7 @@ export default function BookDetails() {
             <p className="text-gray-700 mb-2">
               <strong>Author:</strong> {book.author}
             </p>
-            <p className="text-gray-700 mb-4">
+            <p className="text-gray-700 mb-2">
               <strong>Genre:</strong> {book.genre}
             </p>
             <p className="text-gray-700 mb-2">
@@ -82,10 +84,11 @@ export default function BookDetails() {
             <div className="flex justify-center mt-6">
               <button
                 className="bg-orange-900 text-white py-2 px-4 rounded-md hover:bg-orange-800 transition duration-200"
-                onClick={() => navigate(`/Transactions`)}
+                onClick={() => setShowTradeModal(true)}
               >
                 Trade Book
               </button>
+
               {book.owner_id === currentUserId && (
                 <>
                   <button
@@ -105,6 +108,14 @@ export default function BookDetails() {
             </div>
           </div>
         </div>
+
+        {showTradeModal && (
+          <TradeBookModal
+            bookId={book.id}
+            receiverId={book.owner_id}
+            onClose={() => setShowTradeModal(false)}
+          />
+        )}
 
         {showDeleteModal && (
           <DeleteBookModal

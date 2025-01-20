@@ -44,7 +44,22 @@ test('Test #15 - Get a book by ID', () => app.db('books')
     expect(res.status).toBe(200);
   }));
 
-test('Test #16 - Creating a book', async () => {
+test('Test #16 - Get a book by Owner ID', () => app.db('books')
+  .insert({
+    title: 'The Lord of the Rings',
+    author: 'JRR Tolkien',
+    description: 'Set in Middle-earth, the story began as a sequel to Tolkiens 1937 childrens book The Hobbit but eventually developed into a much larger work.',
+    genre: 'Adventure',
+    owner_id: user.id,
+    status: 'Selling',
+  }, ['owner_id'])
+  .then((bookRes) => request(app).get(`${route}/byOwner/${bookRes[0].owner_id}`)
+    .set('Authorization', `bearer ${user.token}`))
+  .then((res) => {
+    expect(res.status).toBe(200);
+  }));
+
+test('Test #17 - Creating a book', async () => {
   await request(app).post(route)
     .set('Authorization', `bearer ${user.token}`)
     .send({
@@ -77,14 +92,14 @@ describe('Book creation validation', () => {
       expect(res.body.error).toBe(errorMessage);
     });
 
-  test('Test #17 - Insert a book without a title', () => testTemplate({ title: null }, 'Title is required!'));
-  test('Test #18 - Insert a book without a author', () => testTemplate({ author: null }, 'Author is required!'));
-  test('Test #19 - Insert a book without a description', () => testTemplate({ description: null }, 'Description is required!'));
-  test('Test #20 - Insert a book without a genre', () => testTemplate({ genre: null }, 'Genre is required!'));
-  test('Test #21 - Insert a book without a status', () => testTemplate({ status: null }, 'Status is required!'));
+  test('Test #18 - Insert a book without a title', () => testTemplate({ title: null }, 'Title is required!'));
+  test('Test #19 - Insert a book without a author', () => testTemplate({ author: null }, 'Author is required!'));
+  test('Test #20 - Insert a book without a description', () => testTemplate({ description: null }, 'Description is required!'));
+  test('Test #21 - Insert a book without a genre', () => testTemplate({ genre: null }, 'Genre is required!'));
+  test('Test #22 - Insert a book without a status', () => testTemplate({ status: null }, 'Status is required!'));
 });
 
-test('Test #22 - Updating book data', () => app.db('books')
+test('Test #23 - Updating book data', () => app.db('books')
   .insert({
     title: 'The Lord of the Rings',
     author: 'JRR Tolkien',
@@ -107,7 +122,7 @@ test('Test #22 - Updating book data', () => app.db('books')
     expect(res.status).toBe(200);
   }));
 
-test('Test #23 - Deleting an book', async () => {
+test('Test #24 - Deleting an book', async () => {
   const book = await app.db('books')
     .insert({
       title: 'The Lord of the Rings',

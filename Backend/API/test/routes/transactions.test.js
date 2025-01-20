@@ -43,7 +43,7 @@ beforeAll(async () => {
   book = { ...bookRegistration[0] };
 });
 
-test('Test #28 - Get a transaction by Sender ID', () => app.db('transactions')
+test('Test #29 - Get a transaction by Sender ID', () => app.db('transactions')
   .insert({
     book_id: book.id,
     sender_id: sender.id,
@@ -56,7 +56,7 @@ test('Test #28 - Get a transaction by Sender ID', () => app.db('transactions')
     expect(res.status).toBe(200);
   }));
 
-test('Test #29 - Get a transaction by Receiver ID', () => app.db('transactions')
+test('Test #30 - Get a transaction by Receiver ID', () => app.db('transactions')
   .insert({
     book_id: book.id,
     sender_id: sender.id,
@@ -69,7 +69,7 @@ test('Test #29 - Get a transaction by Receiver ID', () => app.db('transactions')
     expect(res.status).toBe(200);
   }));
 
-test('Test #30 - Creating a transaction', async () => {
+test('Test #31 - Creating a transaction', async () => {
   await request(app).post(route)
     .set('Authorization', `bearer ${sender.token}`)
     .send({
@@ -98,10 +98,10 @@ describe('Transaction creation validation', () => {
       expect(res.body.error).toBe(errorMessage);
     });
 
-  test('Test #31 - Insert a transaction without a status', () => testTemplate({ status: null }, 'Status is required!'));
+  test('Test #32 - Insert a transaction without a status', () => testTemplate({ status: null }, 'Status is required!'));
 });
 
-test('Test #32 - Updating transaction data', () => app.db('transactions')
+test('Test #33 - Updating transaction data', () => app.db('transactions')
   .insert({
     book_id: book.id,
     sender_id: sender.id,
@@ -120,7 +120,7 @@ test('Test #32 - Updating transaction data', () => app.db('transactions')
     expect(res.status).toBe(200);
   }));
 
-test('Test #33 - Deleting an transaction', async () => {
+test('Test #34 - Deleting an transaction', async () => {
   const transaction = await app.db('transactions')
     .insert({
       book_id: book.id,

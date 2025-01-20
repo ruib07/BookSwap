@@ -35,7 +35,7 @@ beforeAll(async () => {
   book = { ...bookRegistration[0] };
 });
 
-test('Test #24 - Get a book image by Book ID', () => app.db('book_images')
+test('Test #25 - Get a book image by Book ID', () => app.db('book_images')
   .insert({
     book_id: book.id,
     image_url: 'https://books.bizmandala.com/media/books/9780261103252/image_vgrjam3.jpeg',
@@ -46,7 +46,7 @@ test('Test #24 - Get a book image by Book ID', () => app.db('book_images')
     expect(res.status).toBe(200);
   }));
 
-test('Test #25 - Creating a book image', async () => {
+test('Test #26 - Creating a book image', async () => {
   await request(app).post(route)
     .set('Authorization', `bearer ${user.token}`)
     .send({
@@ -71,10 +71,10 @@ describe('Book Image creation validation', () => {
       expect(res.body.error).toBe(errorMessage);
     });
 
-  test('Test #26 - Insert a book image without a image url', () => testTemplate({ image_url: null }, 'Image URL is required!'));
+  test('Test #27 - Insert a book image without a image url', () => testTemplate({ image_url: null }, 'Image URL is required!'));
 });
 
-test('Test #27 - Deleting an book image', async () => {
+test('Test #28 - Deleting an book image', async () => {
   const bookImage = await app.db('book_images')
     .insert({
       book_id: book.id,

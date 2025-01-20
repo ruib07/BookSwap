@@ -1,4 +1,4 @@
-import { INewBook, IBookImage } from "../types/book";
+import { INewBook, IBookImage, IBook } from "../types/book";
 import { GetAuthHeaders } from "./helpers/getAuthHeaders";
 import axios from "axios";
 
@@ -34,6 +34,21 @@ export const GetBookById = async (bookId: string) => {
   }
 };
 
+export const GetBooksByOwner = async (ownerId: string) => {
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/${API_VERSION}/books/byOwner/${ownerId}`,
+      {
+        headers: token,
+      }
+    );
+
+    return response;
+  } catch (error) {
+    throw new Error("Failed to get books by owner!");
+  }
+};
+
 export const AddBook = async (newBook: INewBook) => {
   try {
     const response = await axios.post(
@@ -47,6 +62,25 @@ export const AddBook = async (newBook: INewBook) => {
     return response;
   } catch (error) {
     throw new Error("Failed to add book!");
+  }
+};
+
+export const UpdateBook = async (
+  bookId: string,
+  newBookData: Partial<IBook>
+) => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/${API_VERSION}/books/${bookId}`,
+      newBookData,
+      {
+        headers: token,
+      }
+    );
+
+    return response;
+  } catch (error) {
+    throw new Error("Failed to update book data!");
   }
 };
 

@@ -97,7 +97,7 @@ export default function Authentication() {
                 <div className="text-sm">
                   <a
                     href="/"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    className="font-semibold text-orange-900 hover:text-orange-800"
                   >
                     Forgot password?
                   </a>
