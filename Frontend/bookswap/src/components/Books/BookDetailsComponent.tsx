@@ -6,6 +6,7 @@ import Header from "../../layouts/Header";
 import NotFound from "../../components/404";
 import DeleteBookModal from "./DeleteBookModal";
 import TradeBookModal from "../Transactions/BookTransactionModal";
+import ReviewsComponent from "../Reviews/ReviewsComponent";
 
 export default function BookDetails() {
   const { bookId } = useParams<{ bookId: string }>();
@@ -125,6 +126,9 @@ export default function BookDetails() {
             onConfirm={handleDeleteConfirm}
           />
         )}
+
+        <br />
+        <ReviewsComponent />
       </div>
     </div>
   );

@@ -1,16 +1,15 @@
 import { GetAuthHeaders } from "./helpers/getAuthHeaders";
+import { INewReview } from "../types/review";
 import axios from "axios";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const API_VERSION = process.env.REACT_APP_API_VERSION;
 const token = GetAuthHeaders();
 
-export const GetMyUser = async () => {
-  const userId = localStorage.getItem("id");
-
+export const GetReviewsByBook = async (bookId: string) => {
   try {
     const response = await axios.get(
-      `${API_BASE_URL}/${API_VERSION}/users/${userId}`,
+      `${API_BASE_URL}/${API_VERSION}/reviews/byBook/${bookId}`,
       {
         headers: token,
       }
@@ -18,14 +17,15 @@ export const GetMyUser = async () => {
 
     return response;
   } catch (error) {
-    throw new Error("Failed to get your user!");
+    throw new Error("Failed to get reviews by book!");
   }
 };
 
-export const GetUserById = async (userId: string) => {
+export const AddReview = async (newReview: INewReview) => {
   try {
-    const response = await axios.get(
-      `${API_BASE_URL}/${API_VERSION}/users/${userId}`,
+    const response = await axios.post(
+      `${API_BASE_URL}/${API_VERSION}/reviews`,
+      newReview,
       {
         headers: token,
       }
@@ -33,6 +33,6 @@ export const GetUserById = async (userId: string) => {
 
     return response;
   } catch (error) {
-    throw new Error("Failed to get user!");
+    throw new Error("Failed to add review!");
   }
 };

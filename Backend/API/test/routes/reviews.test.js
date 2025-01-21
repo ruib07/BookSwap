@@ -33,7 +33,20 @@ beforeAll(async () => {
   book = { ...bookRegistration[0] };
 });
 
-test('Test #35 - Get reviews by Reviewer ID', () => app.db('reviews')
+test('Test #35 - Get reviews by Book ID', () => app.db('reviews')
+  .insert({
+    book_id: book.id,
+    reviewer_id: reviewer.id,
+    rating: 4,
+    comment: 'Really good book to read.',
+  }, ['book_id'])
+  .then((reviewRes) => request(app).get(`${route}/byBook/${reviewRes[0].book_id}`)
+    .set('Authorization', `bearer ${reviewer.token}`))
+  .then((res) => {
+    expect(res.status).toBe(200);
+  }));
+
+test('Test #36 - Get reviews by Reviewer ID', () => app.db('reviews')
   .insert({
     book_id: book.id,
     reviewer_id: reviewer.id,
@@ -46,7 +59,7 @@ test('Test #35 - Get reviews by Reviewer ID', () => app.db('reviews')
     expect(res.status).toBe(200);
   }));
 
-test('Test #36 - Creating a review', async () => {
+test('Test #37 - Creating a review', async () => {
   await request(app).post(route)
     .set('Authorization', `bearer ${reviewer.token}`)
     .send({
@@ -75,11 +88,11 @@ describe('Transaction creation validation', () => {
       expect(res.body.error).toBe(errorMessage);
     });
 
-  test('Test #37 - Insert a review without a rating', () => testTemplate({ rating: null }, 'Rating is required!'));
-  test('Test #38 - Insert a review without a comment', () => testTemplate({ comment: null }, 'Comment is required!'));
+  test('Test #38 - Insert a review without a rating', () => testTemplate({ rating: null }, 'Rating is required!'));
+  test('Test #39 - Insert a review without a comment', () => testTemplate({ comment: null }, 'Comment is required!'));
 });
 
-test('Test #39 - Deleting an transaction', async () => {
+test('Test #40 - Deleting an review', async () => {
   const review = await app.db('reviews')
     .insert({
       book_id: book.id,
