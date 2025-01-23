@@ -55,7 +55,7 @@ export default function Home() {
       <Header />
       <br />
       <br />
-      <div className="bg-white min-h-screen">
+      <div className="min-h-screen">
         <section
           className="relative text-white py-20"
           style={{

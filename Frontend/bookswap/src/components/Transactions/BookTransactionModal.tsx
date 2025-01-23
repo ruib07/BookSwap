@@ -3,18 +3,13 @@ import { GetBooksByOwner, UpdateBook } from "../../services/booksService";
 import { AddTransaction } from "../../services/transactionsService";
 import { toast } from "react-toastify";
 import { IBook } from "../../types/book";
-
-interface TradeBookModalProps {
-  bookId: string;
-  receiverId: string;
-  onClose: () => void;
-}
+import { ITradeBookModalProps } from "../../types/transaction";
 
 export default function TradeBookModal({
   bookId,
   receiverId,
   onClose,
-}: TradeBookModalProps) {
+}: ITradeBookModalProps) {
   const [userBooks, setUserBooks] = useState<IBook[]>([]);
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
   const currentUserId = localStorage.getItem("id") || "";

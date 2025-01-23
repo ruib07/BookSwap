@@ -4,3 +4,9 @@ export interface INewTransaction {
   receiver_id: string;
   status: string;
 }
+
+export interface ITradeBookModalProps {
+  bookId: string;
+  receiverId: string;
+  onClose: () => void;
+}

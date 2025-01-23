@@ -24,7 +24,7 @@ export default function BookDetails() {
     const fetchBookAndImage = async () => {
       try {
         const bookResponse = await GetBookById(bookId!);
-        const fetchedBook = bookResponse?.data;
+        const fetchedBook = bookResponse.data;
         if (fetchedBook && fetchedBook.id !== book?.id) {
           setBook(fetchedBook);
         }
@@ -37,7 +37,6 @@ export default function BookDetails() {
           }
           setBookImageId(imageResponse.data.id);
         } catch (imageError) {
-          console.error(`Error fetching image for book ${bookId}:`, imageError);
           setBookImage(
             "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgk8abFHYLv0a4p7JHLils4vSMFOjdIv_nyfGOCZfELZBh4F4QMdR0k2EfJ5pemlMdIrDXlGAj3HFGqc8746iAzd9zwDz8IVbaRZitaWt1GQWYwLJLU9odfgM-Dj1r-froD4bjwseX88Tfs/s1600/unknown+book.jpg"
           );

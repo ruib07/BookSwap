@@ -1,13 +1,13 @@
 import { toast } from "react-toastify";
 import { DeleteBook, DeleteBookImage } from "../../services/booksService";
-import { DeleteProjectModalProps } from "../../types/book";
+import { IDeleteProjectModalProps } from "../../types/book";
 
 export default function DeleteABook({
   bookImageId,
   bookId,
   onClose,
   onConfirm,
-}: DeleteProjectModalProps) {
+}: IDeleteProjectModalProps) {
   const showSuccess = () => {
     toast.success("Book removed successfully!", {
       position: "bottom-right",

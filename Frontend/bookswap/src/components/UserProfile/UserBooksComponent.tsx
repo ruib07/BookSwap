@@ -75,7 +75,7 @@ export default function UserBooks() {
               <div
                 key={book.id}
                 onClick={() => handleBookClick(book.id)}
-                className="bg-amber-50 shadow-md rounded-lg p-4 cursor-pointer"
+                className="bg-amber-50 shadow-md rounded-lg p-4 max-w-sm overflow-hidden shadow-lg cursor-pointer bg-white transform transition duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200"
               >
                 <img
                   src={bookImages[book.id]}

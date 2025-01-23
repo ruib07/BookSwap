@@ -17,7 +17,7 @@ export interface INewBook {
   owner_id: string;
 }
 
-export interface DeleteProjectModalProps {
+export interface IDeleteProjectModalProps {
   bookImageId: string;
   bookId: string;
   onClose: () => void;

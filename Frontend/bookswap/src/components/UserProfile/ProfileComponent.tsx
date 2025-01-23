@@ -60,8 +60,8 @@ export default function Profile() {
   return (
     <>
       <UserProfileHeader />
-      <div className="min-h-screen flex items-start justify-center mt-[140px] p-8">
-        <div className="bg-amber-50 shadow-lg rounded-lg p-8 max-w-2xl w-full">
+      <div className="min-h-screen flex items-start justify-center mt-[140px]">
+        <div className="bg-white shadow-lg rounded-lg p-8 max-w-2xl w-full">
           <h2 className="text-3xl font-bold text-orange-900 mb-6 text-center">
             Profile
           </h2>

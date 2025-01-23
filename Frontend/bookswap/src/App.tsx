@@ -2,14 +2,15 @@ import { ToastContainer } from "react-toastify";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
-import NewRegistration from "./components/Authentication/RegistrationComponent";
-import Authentication from "./components/Authentication/LoginComponent";
-import NotFound from "./components/404";
-import Home from "./components/HomeComponent";
-import BookCreation from "./components/Books/AddBookComponent";
-import Books from "./components/Books/BooksComponent";
 import GoToTopPage from "./hooks/GoToTopPage";
 import ScrollToTopButton from "./hooks/ScrollToTopButton";
+
+import Home from "./components/HomeComponent";
+import NotFound from "./components/404";
+import NewRegistration from "./components/Authentication/RegistrationComponent";
+import Authentication from "./components/Authentication/LoginComponent";
+import BookCreation from "./components/Books/AddBookComponent";
+import Books from "./components/Books/BooksComponent";
 import BookDetails from "./components/Books/BookDetailsComponent";
 import BookImageCreation from "./components/Books/AddBookImageComponent";
 import Profile from "./components/UserProfile/ProfileComponent";
@@ -18,7 +19,7 @@ import UserBooks from "./components/UserProfile/UserBooksComponent";
 export default function App() {
   return (
     <Router>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-amber-50">
         <ToastContainer />
         <GoToTopPage />
         <ScrollToTopButton />
