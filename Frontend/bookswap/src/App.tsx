@@ -12,6 +12,8 @@ import GoToTopPage from "./hooks/GoToTopPage";
 import ScrollToTopButton from "./hooks/ScrollToTopButton";
 import BookDetails from "./components/Books/BookDetailsComponent";
 import BookImageCreation from "./components/Books/AddBookImageComponent";
+import Profile from "./components/UserProfile/ProfileComponent";
+import UserBooks from "./components/UserProfile/UserBooksComponent";
 
 export default function App() {
   return (
@@ -33,6 +35,8 @@ export default function App() {
             <Route path="/Book/:bookId" element={<BookDetails />} />
             <Route path="/AddBook" element={<BookCreation />} />
             <Route path="/AddBookImage" element={<BookImageCreation />} />
+            <Route path="/Profile" element={<Profile />} />
+            <Route path="/MyBooks" element={<UserBooks />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

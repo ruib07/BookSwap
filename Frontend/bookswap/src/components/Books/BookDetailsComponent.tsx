@@ -25,11 +25,16 @@ export default function BookDetails() {
       try {
         const bookResponse = await GetBookById(bookId!);
         const fetchedBook = bookResponse?.data;
-        setBook(fetchedBook);
+        if (fetchedBook && fetchedBook.id !== book?.id) {
+          setBook(fetchedBook);
+        }
 
         try {
           const imageResponse = await GetBookImageByBook(bookId!);
-          setBookImage(imageResponse.data.image_url);
+          const newImageUrl = imageResponse.data.image_url;
+          if (newImageUrl !== bookImage) {
+            setBookImage(newImageUrl);
+          }
           setBookImageId(imageResponse.data.id);
         } catch (imageError) {
           console.error(`Error fetching image for book ${bookId}:`, imageError);
@@ -43,7 +48,7 @@ export default function BookDetails() {
     };
 
     fetchBookAndImage();
-  }, [bookId]);
+  }, [bookId, book, bookImage]);
 
   const handleDeleteConfirm = () => {
     navigate("/Books");

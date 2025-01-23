@@ -21,6 +21,21 @@ export const GetReviewsByBook = async (bookId: string) => {
   }
 };
 
+export const GetReviewsByReviewer = async (reviewerId: string) => {
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/${API_VERSION}/reviews/${reviewerId}`,
+      {
+        headers: token,
+      }
+    );
+
+    return response;
+  } catch (error) {
+    throw new Error("Failed to get reviews by reviewer!");
+  }
+};
+
 export const AddReview = async (newReview: INewReview) => {
   try {
     const response = await axios.post(
