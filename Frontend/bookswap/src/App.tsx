@@ -15,6 +15,7 @@ import BookDetails from "./components/Books/BookDetailsComponent";
 import BookImageCreation from "./components/Books/AddBookImageComponent";
 import Profile from "./components/UserProfile/ProfileComponent";
 import UserBooks from "./components/UserProfile/UserBooksComponent";
+import UserReviews from "./components/UserProfile/UserReviewsComponent";
 
 export default function App() {
   return (
@@ -38,6 +39,7 @@ export default function App() {
             <Route path="/AddBookImage" element={<BookImageCreation />} />
             <Route path="/Profile" element={<Profile />} />
             <Route path="/MyBooks" element={<UserBooks />} />
+            <Route path="/MyReviews" element={<UserReviews />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

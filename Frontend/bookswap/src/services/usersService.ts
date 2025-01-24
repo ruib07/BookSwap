@@ -1,4 +1,4 @@
-import { User } from "../types/user";
+import { IUser } from "../types/user";
 import { GetAuthHeaders } from "./helpers/getAuthHeaders";
 import axios from "axios";
 
@@ -38,7 +38,7 @@ export const GetUserById = async (userId: string) => {
   }
 };
 
-export const UpdateUser = async (newUserData: Partial<User>) => {
+export const UpdateUser = async (newUserData: Partial<IUser>) => {
   const userId = localStorage.getItem("id");
 
   try {

@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { GetReviewsByBook, AddReview } from "../../services/reviewsService";
-import { GetUserById } from "../../services/userService";
+import { GetUserById } from "../../services/usersService";
 import { IReview, INewReview } from "../../types/review";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -11,28 +12,12 @@ export default function ReviewsComponent() {
   const [userNames, setUserNames] = useState<{ [key: string]: string }>({});
   const [newRating, setNewRating] = useState("");
   const [newComment, setNewComment] = useState("");
-  const [, setError] = useState<string | null>(null);
 
-  const showSuccess = () => {
-    toast.success("Review completed successfully!", {
-      position: "bottom-right",
-      autoClose: 5000,
-      closeOnClick: true,
-      draggable: true,
-    });
-  };
-
-  const showWarning = () => {
-    toast.warning("Something went wrong!", {
-      position: "bottom-right",
-      autoClose: 5000,
-      closeOnClick: true,
-      draggable: true,
-    });
-  };
-
-  const showError = () => {
-    toast.error("Review was not completed!", {
+  const showToast = (
+    message: string,
+    type: "success" | "warning" | "error"
+  ) => {
+    toast[type](message, {
       position: "bottom-right",
       autoClose: 5000,
       closeOnClick: true,
@@ -41,17 +26,16 @@ export default function ReviewsComponent() {
   };
 
   useEffect(() => {
-    const fetchComments = async () => {
+    const fetchReviews = async () => {
       try {
-        const reviewsResponse = await GetReviewsByBook(bookId!);
-        setReviews(reviewsResponse.data || []);
+        const response = await GetReviewsByBook(bookId!);
+        setReviews(response.data || []);
       } catch (error) {
-        setError("Failed to load reviews");
-        showError();
+        showToast("Review was not completed!", "error");
       }
     };
 
-    fetchComments();
+    fetchReviews();
   }, [bookId]);
 
   useEffect(() => {
@@ -76,23 +60,23 @@ export default function ReviewsComponent() {
     if (reviews.length > 0) {
       fetchUserNames();
     }
-  }, [reviews, userNames]);
+  }, [reviews]);
 
   const handleAddReview = async () => {
     const reviewerId = localStorage.getItem("id");
 
     if (!reviewerId) {
-      showError();
+      showToast("Review was not completed!", "error");
       return;
     }
 
     if (!newRating || !newComment) {
-      showWarning();
+      showToast("Something went wrong!", "warning");
       return;
     }
 
     if (Number(newRating) < 0 || Number(newRating) > 5) {
-      showWarning();
+      showToast("Something went wrong!", "warning");
       return;
     }
 
@@ -105,7 +89,7 @@ export default function ReviewsComponent() {
       };
 
       await AddReview(reviewData);
-      showSuccess();
+      showToast("Review completed successfully!", "success");
 
       const updatedReviews = await GetReviewsByBook(bookId!);
       setReviews(updatedReviews.data || []);
@@ -113,7 +97,7 @@ export default function ReviewsComponent() {
       setNewRating("");
       setNewComment("");
     } catch (error) {
-      showError();
+      showToast("Review was not completed!", "error");
     }
   };
 

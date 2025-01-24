@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { GetMyUser, UpdateUser } from "../../services/userService";
-import { User } from "../../types/user";
+import { GetMyUser, UpdateUser } from "../../services/usersService";
+import { IUser } from "../../types/user";
 import UserProfileHeader from "../../layouts/UserProfileHeader";
 
 export default function Profile() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<IUser | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState<Partial<User>>({
+  const [formData, setFormData] = useState<Partial<IUser>>({
     username: "",
     email: "",
     password: "",

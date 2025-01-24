@@ -13,17 +13,8 @@ export default function NewRegistration() {
   const [visible, setVisible] = useState<boolean>(true);
   const navigate = useNavigate();
 
-  const showSuccess = () => {
-    toast.success("Registration completed successfully!", {
-      position: "bottom-right",
-      autoClose: 5000,
-      closeOnClick: true,
-      draggable: true,
-    });
-  };
-
-  const showError = () => {
-    toast.error("Registration was not completed!", {
+  const showToast = (message: string, type: "success" | "error") => {
+    toast[type](message, {
       position: "bottom-right",
       autoClose: 5000,
       closeOnClick: true,
@@ -42,14 +33,14 @@ export default function NewRegistration() {
 
     try {
       await Registration(newUser);
-      showSuccess();
+      showToast("Registration completed successfully!", "success");
 
       setUsername("");
       setEmail("");
       setPassword("");
       navigate("/Authentication/Login");
     } catch (error) {
-      showError();
+      showToast("Registration was not completed!", "error");
     }
   };
 

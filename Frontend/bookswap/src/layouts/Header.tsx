@@ -11,7 +11,7 @@ import {
 import Icon from "../assets/BookSwapLogo.png";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate, useLocation } from "react-router-dom";
-import { GetMyUser } from "../services/userService";
+import { GetMyUser } from "../services/usersService";
 import { navigation } from "../data/navigation";
 
 function classNames(...classes: any) {

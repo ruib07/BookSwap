@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { IBook } from "../types/book";
 import { GetAllBooks, GetBookImageByBook } from "../services/booksService";
 import Header from "../layouts/Header";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [books, setBooks] = useState<IBook[]>([]);
   const [bookImages, setBookImages] = useState<Record<string, string>>({});
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -72,7 +74,10 @@ export default function Home() {
               Discover, share, and trade books with others. Your next great read
               is just a swap away!
             </p>
-            <button className="bg-orange-900 text-white px-8 py-3 font-semibold rounded-md hover:bg-orange-700 transition">
+            <button
+              className="bg-orange-900 text-white px-8 py-3 font-semibold rounded-md hover:bg-orange-700 transition"
+              onClick={() => navigate("/Books")}
+            >
               Get Started
             </button>
           </div>

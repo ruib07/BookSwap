@@ -5,6 +5,7 @@ import { IBook } from "../../types/book";
 import Header from "../../layouts/Header";
 import NotFound from "../../components/404";
 import DeleteBookModal from "./DeleteBookModal";
+import DeleteBookImageModal from "./DeleteBookImageModal";
 import TradeBookModal from "../Transactions/BookTransactionModal";
 import ReviewsComponent from "../Reviews/ReviewsComponent";
 
@@ -15,10 +16,13 @@ export default function BookDetails() {
   const [bookImageId, setBookImageId] = useState<string | null>(null);
   const [, setError] = useState<string | null>(null);
   const [showTradeModal, setShowTradeModal] = useState(false);
+  const [showDeleteImageModal, setShowDeleteImageModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate();
 
   const currentUserId = localStorage.getItem("id");
+  const defaultBookImage =
+    "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgk8abFHYLv0a4p7JHLils4vSMFOjdIv_nyfGOCZfELZBh4F4QMdR0k2EfJ5pemlMdIrDXlGAj3HFGqc8746iAzd9zwDz8IVbaRZitaWt1GQWYwLJLU9odfgM-Dj1r-froD4bjwseX88Tfs/s1600/unknown+book.jpg";
 
   useEffect(() => {
     const fetchBookAndImage = async () => {
@@ -37,9 +41,7 @@ export default function BookDetails() {
           }
           setBookImageId(imageResponse.data.id);
         } catch (imageError) {
-          setBookImage(
-            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgk8abFHYLv0a4p7JHLils4vSMFOjdIv_nyfGOCZfELZBh4F4QMdR0k2EfJ5pemlMdIrDXlGAj3HFGqc8746iAzd9zwDz8IVbaRZitaWt1GQWYwLJLU9odfgM-Dj1r-froD4bjwseX88Tfs/s1600/unknown+book.jpg"
-          );
+          setBookImage(defaultBookImage);
         }
       } catch (error) {
         setError(`Error fetching book: ${error}`);
@@ -49,20 +51,16 @@ export default function BookDetails() {
     fetchBookAndImage();
   }, [bookId, book, bookImage]);
 
-  const handleDeleteConfirm = () => {
-    navigate("/Books");
-  };
+  const handleDeleteConfirm = () => navigate("/Books");
 
-  if (!book) {
-    return <NotFound />;
-  }
+  if (!book) return <NotFound />;
+
+  const hasBookImage = bookImage && bookImage !== defaultBookImage;
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="min-h-screen">
       <Header />
-      <br />
-      <br />
-      <div className="container mx-auto p-6">
+      <div className="container mx-auto p-6 mt-[70px]">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <img
             src={bookImage!}
@@ -85,25 +83,35 @@ export default function BookDetails() {
             <p className="text-gray-700 mb-2">
               <strong>Status:</strong> {book.status}
             </p>
-            <hr className="my-10" />
             <div className="flex justify-center mt-6">
               <button
-                className="bg-orange-900 text-white py-2 px-4 rounded-md hover:bg-orange-800 transition duration-200"
+                className="bg-orange-900 text-white py-2 px-4 rounded-md hover:bg-orange-800"
                 onClick={() => setShowTradeModal(true)}
               >
                 Trade Book
               </button>
-
               {book.owner_id === currentUserId && (
                 <>
+                  {!hasBookImage && (
+                    <button
+                      className="ms-3 bg-orange-900 text-white py-2 px-4 rounded-md hover:bg-orange-800"
+                      onClick={() =>
+                        navigate(`/AddBookImage?bookId=${book.id}`)
+                      }
+                    >
+                      Add Book Image
+                    </button>
+                  )}
+                  {hasBookImage && (
+                    <button
+                      className="ms-3 bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-500"
+                      onClick={() => setShowDeleteImageModal(true)}
+                    >
+                      Delete Book Image
+                    </button>
+                  )}
                   <button
-                    className="ms-3 bg-orange-900 text-white py-2 px-4 rounded-md hover:bg-orange-800 transition duration-200"
-                    onClick={() => navigate(`/AddBookImage?bookId=${book.id}`)}
-                  >
-                    Add Book Image
-                  </button>
-                  <button
-                    className="ms-3 bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-500 transition duration-200"
+                    className="ms-3 bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-500"
                     onClick={() => setShowDeleteModal(true)}
                   >
                     Delete Book
@@ -113,7 +121,6 @@ export default function BookDetails() {
             </div>
           </div>
         </div>
-
         {showTradeModal && (
           <TradeBookModal
             bookId={book.id}
@@ -121,7 +128,13 @@ export default function BookDetails() {
             onClose={() => setShowTradeModal(false)}
           />
         )}
-
+        {showDeleteImageModal && (
+          <DeleteBookImageModal
+            bookImageId={bookImageId || ""}
+            onClose={() => setShowDeleteImageModal(false)}
+            onConfirm={handleDeleteConfirm}
+          />
+        )}
         {showDeleteModal && (
           <DeleteBookModal
             bookImageId={bookImageId || ""}
@@ -130,8 +143,6 @@ export default function BookDetails() {
             onConfirm={handleDeleteConfirm}
           />
         )}
-
-        <br />
         <ReviewsComponent />
       </div>
     </div>

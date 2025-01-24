@@ -1,13 +1,12 @@
 import { toast } from "react-toastify";
-import { DeleteBook, DeleteBookImage } from "../../services/booksService";
-import { IDeleteBookModalProps } from "../../types/book";
+import { DeleteBookImage } from "../../services/booksService";
+import { IDeleteBookImageModalProps } from "../../types/book";
 
-export default function DeleteABook({
+export default function DeleteABookImage({
   bookImageId,
-  bookId,
   onClose,
   onConfirm,
-}: IDeleteBookModalProps) {
+}: IDeleteBookImageModalProps) {
   const showToast = (message: string, type: "success" | "error") => {
     toast[type](message, {
       position: "bottom-right",
@@ -20,12 +19,11 @@ export default function DeleteABook({
   const handleDelete = () => {
     try {
       DeleteBookImage(bookImageId);
-      DeleteBook(bookId);
       onConfirm();
-      showToast("Book removed successfully!", "success");
+      showToast("Book Image removed successfully!", "success");
       onClose();
     } catch (error) {
-      showToast("Book remotion failed!", "error");
+      showToast("Book Image remotion failed!", "error");
       onClose();
     }
   };
@@ -34,7 +32,7 @@ export default function DeleteABook({
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white rounded-lg p-6 w-full max-w-md">
         <h2 className="text-xl font-semibold mb-4 text-gray-800 text-center">
-          Are you sure that you want to delete this book?
+          Are you sure that you want to delete this image?
         </h2>
         <div className="flex justify-center space-x-4 mt-6">
           <button

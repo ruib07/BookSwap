@@ -9,21 +9,11 @@ export default function BookImageCreation() {
   const [image_url, setImageUrl] = useState<string>("");
   const navigate = useNavigate();
   const location = useLocation();
-
   const searchParams = new URLSearchParams(location.search);
   const book_id = searchParams.get("bookId");
 
-  const showSuccess = () => {
-    toast.success("Registration completed successfully!", {
-      position: "bottom-right",
-      autoClose: 5000,
-      closeOnClick: true,
-      draggable: true,
-    });
-  };
-
-  const showError = () => {
-    toast.error("Registration was not completed!", {
+  const showToast = (message: string, type: "success" | "error") => {
+    toast[type](message, {
       position: "bottom-right",
       autoClose: 5000,
       closeOnClick: true,
@@ -35,7 +25,6 @@ export default function BookImageCreation() {
     e.preventDefault();
 
     if (!book_id) {
-      showError();
       return;
     }
 
@@ -46,12 +35,12 @@ export default function BookImageCreation() {
 
     try {
       await AddBookImage(newBookImage);
-      showSuccess();
+      showToast("Registration completed successfully!", "success");
 
       setImageUrl("");
       navigate(`/Book/${book_id}`);
     } catch (error) {
-      showError();
+      showToast("Registration failed!", "error");
     }
   };
 

@@ -13,17 +13,8 @@ export default function BookCreation() {
   const [status, setStatus] = useState<string>("");
   const navigate = useNavigate();
 
-  const showSuccess = () => {
-    toast.success("Registration completed successfully!", {
-      position: "bottom-right",
-      autoClose: 5000,
-      closeOnClick: true,
-      draggable: true,
-    });
-  };
-
-  const showError = () => {
-    toast.error("Registration was not completed!", {
+  const showToast = (message: string, type: "success" | "error") => {
+    toast[type](message, {
       position: "bottom-right",
       autoClose: 5000,
       closeOnClick: true,
@@ -37,7 +28,6 @@ export default function BookCreation() {
     const userId = localStorage.getItem("id");
 
     if (!userId) {
-      showError();
       return;
     }
 
@@ -52,7 +42,7 @@ export default function BookCreation() {
 
     try {
       await AddBook(newBook);
-      showSuccess();
+      showToast("Registration completed successfully!", "success");
 
       setTitle("");
       setAuthor("");
@@ -61,7 +51,7 @@ export default function BookCreation() {
       setStatus("");
       navigate("/Books");
     } catch (error) {
-      showError();
+      showToast("Registration was not completed!", "error");
     }
   };
 

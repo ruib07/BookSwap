@@ -14,26 +14,11 @@ export default function TradeBookModal({
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
   const currentUserId = localStorage.getItem("id") || "";
 
-  const showSuccess = () => {
-    toast.success("Trade successful!", {
-      position: "bottom-right",
-      autoClose: 5000,
-      closeOnClick: true,
-      draggable: true,
-    });
-  };
-
-  const showWarning = () => {
-    toast.warning("Please select a book to trade.", {
-      position: "bottom-right",
-      autoClose: 5000,
-      closeOnClick: true,
-      draggable: true,
-    });
-  };
-
-  const showError = () => {
-    toast.error("Failed to complete the trade!", {
+  const showToast = (
+    message: string,
+    type: "success" | "warning" | "error"
+  ) => {
+    toast[type](message, {
       position: "bottom-right",
       autoClose: 5000,
       closeOnClick: true,
@@ -47,7 +32,7 @@ export default function TradeBookModal({
         const response = await GetBooksByOwner(currentUserId);
         setUserBooks(response.data);
       } catch (error) {
-        showError();
+        showToast("Failed to complete the trade!", "error");
       }
     };
 
@@ -56,7 +41,7 @@ export default function TradeBookModal({
 
   const handleTrade = async () => {
     if (!selectedBookId) {
-      showWarning();
+      showToast("Please select a book to trade!", "warning");
       return;
     }
 
@@ -74,10 +59,10 @@ export default function TradeBookModal({
         status: "Completed",
       });
 
-      showSuccess();
+      showToast("Trade made successfully!", "success");
       onClose();
     } catch (error) {
-      showError();
+      showToast("Failed to complete the trade!", "error");
     }
   };
 

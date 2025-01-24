@@ -12,17 +12,8 @@ export default function Authentication() {
   const [visible, setVisible] = useState<boolean>(true);
   const navigate = useNavigate();
 
-  const showSuccess = () => {
-    toast.success("Login successfully!", {
-      position: "bottom-right",
-      autoClose: 5000,
-      closeOnClick: true,
-      draggable: true,
-    });
-  };
-
-  const showError = () => {
-    toast.error("Login was not completed!", {
+  const showToast = (message: string, type: "success" | "error") => {
+    toast[type](message, {
       position: "bottom-right",
       autoClose: 5000,
       closeOnClick: true,
@@ -46,13 +37,13 @@ export default function Authentication() {
       if (token) {
         localStorage.setItem("token", token);
         localStorage.setItem("id", userid);
-        showSuccess();
+        showToast("Login was successful!", "success");
         navigate("/");
       } else {
-        showError();
+        showToast("Login was not completed!", "error");
       }
     } catch (error) {
-      showError();
+      showToast("Login was not completed!", "error");
     }
   };
 
