@@ -9,9 +9,7 @@ const token = GetAuthHeaders();
 // Books
 export const GetAllBooks = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/${API_VERSION}/books`, {
-      headers: token,
-    });
+    const response = await axios.get(`${API_BASE_URL}/${API_VERSION}/books`);
 
     return response;
   } catch (error) {
@@ -22,10 +20,7 @@ export const GetAllBooks = async () => {
 export const GetBookById = async (bookId: string) => {
   try {
     const response = await axios.get(
-      `${API_BASE_URL}/${API_VERSION}/books/${bookId}`,
-      {
-        headers: token,
-      }
+      `${API_BASE_URL}/${API_VERSION}/books/${bookId}`
     );
 
     return response;

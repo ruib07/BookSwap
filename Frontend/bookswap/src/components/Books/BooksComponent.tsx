@@ -9,6 +9,7 @@ export default function Books() {
   const [bookImages, setBookImages] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [hasToken, setHasToken] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,12 +25,7 @@ export default function Books() {
             try {
               const imageResponse = await GetBookImageByBook(book.id!);
               images[book.id!] = imageResponse.data.image_url;
-            } catch (imageError) {
-              console.error(
-                `Error fetching image for book ${book.id}:`,
-                imageError
-              );
-            }
+            } catch (imageError) {}
           })
         );
 
@@ -40,6 +36,9 @@ export default function Books() {
     };
 
     fetchBooksAndImages();
+
+    const token = localStorage.getItem("token");
+    setHasToken(!!token);
   }, []);
 
   const filteredBooks = books.filter((book) =>
@@ -68,8 +67,12 @@ export default function Books() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <a
-            href="/AddBook"
-            className="flex items-center justify-center bg-orange-800 text-white px-4 py-2 rounded-md hover:bg-orange-900 transition"
+            href={hasToken ? "/AddBook" : "#"}
+            className={`flex items-center justify-center px-4 py-2 rounded-md transition ${
+              hasToken
+                ? "bg-orange-800 text-white hover:bg-orange-900"
+                : "bg-gray-400 text-gray-200 cursor-not-allowed opacity-50"
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

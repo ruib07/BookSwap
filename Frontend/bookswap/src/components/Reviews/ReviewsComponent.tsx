@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 export default function ReviewsComponent() {
   const { bookId } = useParams<{ bookId: string }>();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [userNames, setUserNames] = useState<{ [key: string]: string }>({});
   const [newRating, setNewRating] = useState("");
@@ -24,6 +25,11 @@ export default function ReviewsComponent() {
       draggable: true,
     });
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsAuthenticated(!!token);
+  }, []);
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -121,28 +127,43 @@ export default function ReviewsComponent() {
 
       <div className="mt-4">
         <h3 className="text-lg font-medium mb-2">Add a Review</h3>
-        <input
-          type="number"
-          id="Rating"
-          name="Rating"
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-900 sm:text-sm"
-          placeholder="Rating (0 - 5)"
-          min="0"
-          max="5"
-          required
-          value={newRating}
-          onChange={(e) => setNewRating(e.target.value)}
-        />
-        <textarea
-          className="w-full rounded-md mt-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-900 sm:text-sm"
-          rows={4}
-          placeholder="Add a review..."
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-        />
+
+        {!isAuthenticated ? (
+          <p className="text-red-500 mb-2">
+            You need to be logged in to add a review.
+          </p>
+        ) : (
+          <>
+            <input
+              type="number"
+              id="Rating"
+              name="Rating"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-900 sm:text-sm"
+              placeholder="Rating (0 - 5)"
+              min="0"
+              max="5"
+              required
+              value={newRating}
+              onChange={(e) => setNewRating(e.target.value)}
+            />
+            <textarea
+              className="w-full rounded-md mt-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-900 sm:text-sm"
+              rows={4}
+              placeholder="Add a review..."
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+            />
+          </>
+        )}
+
         <button
           onClick={handleAddReview}
-          className="bg-orange-900 text-white py-2 px-4 rounded-md mt-2 hover:bg-orange-800 transition duration-200"
+          disabled={!isAuthenticated}
+          className={`py-2 px-4 rounded-md mt-2 transition duration-200 ${
+            isAuthenticated
+              ? "bg-orange-900 text-white hover:bg-orange-800"
+              : "bg-gray-400 text-gray-700 cursor-not-allowed"
+          }`}
         >
           Add Review
         </button>

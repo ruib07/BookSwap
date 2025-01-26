@@ -11,10 +11,7 @@ export const GetMyUser = async () => {
 
   try {
     const response = await axios.get(
-      `${API_BASE_URL}/${API_VERSION}/users/${userId}`,
-      {
-        headers: token,
-      }
+      `${API_BASE_URL}/${API_VERSION}/users/${userId}`
     );
 
     return response;
@@ -26,10 +23,7 @@ export const GetMyUser = async () => {
 export const GetUserById = async (userId: string) => {
   try {
     const response = await axios.get(
-      `${API_BASE_URL}/${API_VERSION}/users/${userId}`,
-      {
-        headers: token,
-      }
+      `${API_BASE_URL}/${API_VERSION}/users/${userId}`
     );
 
     return response;

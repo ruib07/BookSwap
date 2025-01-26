@@ -28,6 +28,13 @@ export default function Header() {
 
   useEffect(() => {
     const fetchUserData = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setUserData(null);
+        return;
+      }
+
       try {
         const response = await GetMyUser();
         const { username } = response?.data;

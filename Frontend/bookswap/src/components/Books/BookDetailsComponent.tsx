@@ -11,6 +11,7 @@ import ReviewsComponent from "../Reviews/ReviewsComponent";
 
 export default function BookDetails() {
   const { bookId } = useParams<{ bookId: string }>();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [book, setBook] = useState<IBook | null>(null);
   const [bookImage, setBookImage] = useState<string | null>(null);
   const [bookImageId, setBookImageId] = useState<string | null>(null);
@@ -21,8 +22,14 @@ export default function BookDetails() {
   const navigate = useNavigate();
 
   const currentUserId = localStorage.getItem("id");
+  const isOwner = book?.owner_id === currentUserId;
   const defaultBookImage =
     "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgk8abFHYLv0a4p7JHLils4vSMFOjdIv_nyfGOCZfELZBh4F4QMdR0k2EfJ5pemlMdIrDXlGAj3HFGqc8746iAzd9zwDz8IVbaRZitaWt1GQWYwLJLU9odfgM-Dj1r-froD4bjwseX88Tfs/s1600/unknown+book.jpg";
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsAuthenticated(!!token);
+  }, []);
 
   useEffect(() => {
     const fetchBookAndImage = async () => {
@@ -84,13 +91,20 @@ export default function BookDetails() {
               <strong>Status:</strong> {book.status}
             </p>
             <div className="flex justify-center mt-6">
-              <button
-                className="bg-orange-900 text-white py-2 px-4 rounded-md hover:bg-orange-800"
-                onClick={() => setShowTradeModal(true)}
-              >
-                Trade Book
-              </button>
-              {book.owner_id === currentUserId && (
+              {!isOwner && (
+                <button
+                  className={`text-white py-2 px-4 rounded-md transition duration-200 ${
+                    isAuthenticated
+                      ? "bg-orange-900 hover:bg-orange-800"
+                      : "bg-gray-400 cursor-not-allowed"
+                  }`}
+                  onClick={() => isAuthenticated && setShowTradeModal(true)}
+                  disabled={!isAuthenticated}
+                >
+                  Trade Book
+                </button>
+              )}
+              {isOwner && (
                 <>
                   {!hasBookImage && (
                     <button

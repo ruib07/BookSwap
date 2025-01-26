@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { GetMyUser, UpdateUser } from "../../services/usersService";
 import { IUser } from "../../types/user";
 import UserProfileHeader from "../../layouts/UserProfileHeader";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export default function Profile() {
   const [user, setUser] = useState<IUser | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [visible, setVisible] = useState<boolean>(true);
   const [formData, setFormData] = useState<Partial<IUser>>({
     username: "",
     email: "",
@@ -51,10 +54,15 @@ export default function Profile() {
       setUser({ ...user!, ...formData });
       setIsEditing(false);
       alert("Profile updated successfully!");
+      window.location.reload();
     } catch (error) {
       console.error(error);
       alert("Failed to update profile.");
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setVisible(!visible);
   };
 
   return (
@@ -113,16 +121,24 @@ export default function Profile() {
                   <label className="block text-sm font-semibold text-gray-700">
                     Password
                   </label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className={`w-full mt-1 p-2 border ${
-                      isEditing ? "border-orange-900" : "border-gray-300"
-                    } rounded-md`}
-                  />
+                  <div className="relative">
+                    <input
+                      type={visible ? "password" : "text"}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      disabled={!isEditing}
+                      className={`w-full mt-1 p-2 pr-10 border ${
+                        isEditing ? "border-orange-900" : "border-gray-300"
+                      } rounded-md`}
+                    />
+                    <span
+                      className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+                      onClick={togglePasswordVisibility}
+                    >
+                      <FontAwesomeIcon icon={visible ? faEye : faEyeSlash} />
+                    </span>
+                  </div>
                 </div>
 
                 {!isEditing ? (
