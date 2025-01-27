@@ -53,7 +53,6 @@ export default function Profile() {
       await UpdateUser(formData);
       setUser({ ...user!, ...formData });
       setIsEditing(false);
-      alert("Profile updated successfully!");
       window.location.reload();
     } catch (error) {
       console.error(error);

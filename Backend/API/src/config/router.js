@@ -5,6 +5,7 @@ module.exports = (app) => {
   const secureRouter = express.Router();
 
   app.use('/auth', app.routes.auths);
+  app.use('/passwordrecovery', app.routes.password_reset_routes);
 
   publicRouter.use('/userRegistrations', app.routes.userRegistrations);
 

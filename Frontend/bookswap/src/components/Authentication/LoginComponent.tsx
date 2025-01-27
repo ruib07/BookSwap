@@ -87,7 +87,7 @@ export default function Authentication() {
                 </label>
                 <div className="text-sm">
                   <a
-                    href="/"
+                    href="/RecoverPassword/SendEmail"
                     className="font-semibold text-orange-900 hover:text-orange-800"
                   >
                     Forgot password?

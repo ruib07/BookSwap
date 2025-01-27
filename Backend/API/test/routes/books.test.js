@@ -24,7 +24,6 @@ beforeAll(async () => {
 });
 
 test('Test #14 - Get all books', () => request(app).get(route)
-  .set('Authorization', `bearer ${user.token}`)
   .then((res) => {
     expect(res.status).toBe(200);
   }));
@@ -38,8 +37,7 @@ test('Test #15 - Get a book by ID', () => app.db('books')
     owner_id: user.id,
     status: 'Selling',
   }, ['id'])
-  .then((bookRes) => request(app).get(`${route}/${bookRes[0].id}`)
-    .set('Authorization', `bearer ${user.token}`))
+  .then((bookRes) => request(app).get(`${route}/${bookRes[0].id}`))
   .then((res) => {
     expect(res.status).toBe(200);
   }));

@@ -40,8 +40,7 @@ test('Test #35 - Get reviews by Book ID', () => app.db('reviews')
     rating: 4,
     comment: 'Really good book to read.',
   }, ['book_id'])
-  .then((reviewRes) => request(app).get(`${route}/byBook/${reviewRes[0].book_id}`)
-    .set('Authorization', `bearer ${reviewer.token}`))
+  .then((reviewRes) => request(app).get(`${route}/byBook/${reviewRes[0].book_id}`))
   .then((res) => {
     expect(res.status).toBe(200);
   }));
@@ -53,8 +52,7 @@ test('Test #36 - Get reviews by Reviewer ID', () => app.db('reviews')
     rating: 4,
     comment: 'Really good book to read.',
   }, ['reviewer_id'])
-  .then((reviewRes) => request(app).get(`${route}/${reviewRes[0].reviewer_id}`)
-    .set('Authorization', `bearer ${reviewer.token}`))
+  .then((reviewRes) => request(app).get(`${route}/${reviewRes[0].reviewer_id}`))
   .then((res) => {
     expect(res.status).toBe(200);
   }));
@@ -73,7 +71,7 @@ test('Test #37 - Creating a review', async () => {
     });
 });
 
-describe('Transaction creation validation', () => {
+describe('Review creation validation', () => {
   const testTemplate = (newData, errorMessage) => request(app).post(route)
     .set('Authorization', `bearer ${reviewer.token}`)
     .send({

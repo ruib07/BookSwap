@@ -32,8 +32,7 @@ test('Test #7 - Get user by his ID', () => {
       email: userEmail,
       password: 'User2@Created-123',
     }, ['id'])
-    .then((userRes) => request(app).get(`${route}/${userRes[0].id}`)
-      .set('Authorization', `bearer ${user.token}`))
+    .then((userRes) => request(app).get(`${route}/${userRes[0].id}`))
     .then((res) => {
       expect(res.status).toBe(200);
     });

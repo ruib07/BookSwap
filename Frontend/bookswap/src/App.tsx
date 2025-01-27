@@ -9,6 +9,7 @@ import Home from "./components/HomeComponent";
 import NotFound from "./components/404";
 import NewRegistration from "./components/Authentication/RegistrationComponent";
 import Authentication from "./components/Authentication/LoginComponent";
+import RecoverPasswordEmail from "./components/Authentication/PasswordRecovery/RecoverPasswordEmail";
 import BookCreation from "./components/Books/AddBookComponent";
 import Books from "./components/Books/BooksComponent";
 import BookDetails from "./components/Books/BookDetailsComponent";
@@ -16,6 +17,7 @@ import BookImageCreation from "./components/Books/AddBookImageComponent";
 import Profile from "./components/UserProfile/ProfileComponent";
 import UserBooks from "./components/UserProfile/UserBooksComponent";
 import UserReviews from "./components/UserProfile/UserReviewsComponent";
+import RecoverPasswordUpdate from "./components/Authentication/PasswordRecovery/ChangePassword";
 
 export default function App() {
   return (
@@ -33,6 +35,14 @@ export default function App() {
               element={<NewRegistration />}
             />
             <Route path="/Authentication/Login" element={<Authentication />} />
+            <Route
+              path="/RecoverPassword/SendEmail"
+              element={<RecoverPasswordEmail />}
+            />
+            <Route
+              path="/RecoverPassword/ChangePassword"
+              element={<RecoverPasswordUpdate />}
+            />
             <Route path="/Books" element={<Books />} />
             <Route path="/Book/:bookId" element={<BookDetails />} />
             <Route path="/AddBook" element={<BookCreation />} />
