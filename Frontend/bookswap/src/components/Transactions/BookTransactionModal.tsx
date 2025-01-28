@@ -60,6 +60,9 @@ export default function TradeBookModal({
       });
 
       showToast("Trade made successfully!", "success");
+      setTimeout(() => {
+        window.location.reload();
+      }, 6000);
       onClose();
     } catch (error) {
       showToast("Failed to complete the trade!", "error");
