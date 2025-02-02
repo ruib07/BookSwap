@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { RecoverPasswordChange } from "../../../services/recoverPasswordService";
+import { RecoverPasswordChange } from "../../services/recoverPasswordService";
 
 export default function RecoverPasswordUpdate() {
   const [newPassword, setNewPassword] = useState("");

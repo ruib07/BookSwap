@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { GetMyUser, UpdateUser } from "../../services/usersService";
+import { GetUserById, UpdateUser } from "../../services/usersService";
 import { IUser } from "../../types/user";
 import UserProfileHeader from "../../layouts/UserProfileHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +18,8 @@ export default function Profile() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await GetMyUser();
+        const userId = localStorage.getItem("id");
+        const response = await GetUserById(userId!);
         setUser(response.data);
         setFormData({
           username: response.data.username,

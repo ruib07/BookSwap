@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { GetReviewsByBook, AddReview } from "../../services/reviewsService";
-import { GetUserById } from "../../services/usersService";
-import { IReview, INewReview } from "../../types/review";
+import { GetReviewsByBook, AddReview } from "../services/reviewsService";
+import { GetUserById } from "../services/usersService";
+import { IReview, INewReview } from "../types/review";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 

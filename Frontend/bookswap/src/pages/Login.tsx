@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
-import { ILogin } from "../../types/authentication";
-import { Login } from "../../services/authenticationService";
+import { ILogin } from "../types/authentication";
+import { Login } from "../services/authenticationService";
 
 export default function Authentication() {
   const [email, setEmail] = useState<string>("");

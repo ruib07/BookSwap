@@ -11,8 +11,8 @@ import {
 import Icon from "../assets/BookSwapLogo.png";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate, useLocation } from "react-router-dom";
-import { GetMyUser } from "../services/usersService";
-import { navigation } from "../data/navigation";
+import { navigation } from "./navigation";
+import { GetUserById } from "../services/usersService";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -36,7 +36,8 @@ export default function Header() {
       }
 
       try {
-        const response = await GetMyUser();
+        const userId = localStorage.getItem("id");
+        const response = await GetUserById(userId!);
         const { username } = response?.data;
         setUserData({ username });
       } catch (error) {

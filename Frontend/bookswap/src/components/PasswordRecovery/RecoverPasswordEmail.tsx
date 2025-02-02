@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { RecoverPasswordSendEmail } from "../../../services/recoverPasswordService";
+import { RecoverPasswordSendEmail } from "../../services/recoverPasswordService";
 
 export default function RecoverPasswordEmail() {
   const [email, setEmail] = useState("");

@@ -3,11 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import { GetBookById, GetBookImageByBook } from "../../services/booksService";
 import { IBook } from "../../types/book";
 import Header from "../../layouts/Header";
-import NotFound from "../../components/404";
+import NotFound from "../../pages/404";
 import DeleteBookModal from "./DeleteBookModal";
 import DeleteBookImageModal from "./DeleteBookImageModal";
 import TradeBookModal from "../Transactions/BookTransactionModal";
-import ReviewsComponent from "../Reviews/ReviewsComponent";
+import ReviewsComponent from "../../pages/Reviews";
 
 export default function BookDetails() {
   const { bookId } = useParams<{ bookId: string }>();

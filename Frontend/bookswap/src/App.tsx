@@ -2,22 +2,25 @@ import { ToastContainer } from "react-toastify";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
-import GoToTopPage from "./hooks/GoToTopPage";
-import ScrollToTopButton from "./hooks/ScrollToTopButton";
+import GoToTopPage from "./components/Button/GoToTopPage";
+import ScrollToTopButton from "./components/Button/ScrollToTopButton";
 
-import Home from "./components/HomeComponent";
-import NotFound from "./components/404";
-import NewRegistration from "./components/Authentication/RegistrationComponent";
-import Authentication from "./components/Authentication/LoginComponent";
-import RecoverPasswordEmail from "./components/Authentication/PasswordRecovery/RecoverPasswordEmail";
-import BookCreation from "./components/Books/AddBookComponent";
-import Books from "./components/Books/BooksComponent";
-import BookDetails from "./components/Books/BookDetailsComponent";
-import BookImageCreation from "./components/Books/AddBookImageComponent";
-import Profile from "./components/UserProfile/ProfileComponent";
-import UserBooks from "./components/UserProfile/UserBooksComponent";
-import UserReviews from "./components/UserProfile/UserReviewsComponent";
-import RecoverPasswordUpdate from "./components/Authentication/PasswordRecovery/ChangePassword";
+import Home from "./pages/Home";
+import NotFound from "./pages/404";
+
+import NewRegistration from "./pages/Registration";
+import Authentication from "./pages/Login";
+import RecoverPasswordEmail from "./components/PasswordRecovery/RecoverPasswordEmail";
+import RecoverPasswordUpdate from "./components/PasswordRecovery/ChangePassword";
+
+import BookCreation from "./components/Books/AddBook";
+import Books from "./components/Books/Books";
+import BookDetails from "./components/Books/BookDetails";
+import BookImageCreation from "./components/Books/AddBookImage";
+
+import Profile from "./components/UserProfile/Profile";
+import UserBooks from "./components/UserProfile/UserBooks";
+import UserReviews from "./components/UserProfile/UserReviews";
 
 export default function App() {
   return (
